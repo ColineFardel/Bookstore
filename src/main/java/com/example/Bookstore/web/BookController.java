@@ -1,16 +1,24 @@
 package com.example.Bookstore.web;
 
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.Bookstore.model.BookRepository;
+
 @Controller
-@ResponseBody
+//@ResponseBody
 public class BookController {
 	
-	@GetMapping("/index")
-	public String index() {
-		return "Welcome to the bookstore";
-	}
+	@Autowired
+	private BookRepository repository;
 
+	
+    @RequestMapping(value="/booklist")
+    public String bookList(Model model) {	
+        model.addAttribute("books", repository.findAll());
+        return "booklist";
+    }
 
 }
