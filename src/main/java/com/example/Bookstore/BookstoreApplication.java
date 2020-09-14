@@ -24,8 +24,8 @@ public class BookstoreApplication {
 		return(args)->{
 		
 			log.info("save a couple of books");
-			repository.save(new Book("La Peste", "Albert Camus", 1956, "blablabla", 15.34));
-			repository.save(new Book("Fahrenheit 451", "Ray Bradbury", 1932, "blablabla", 12.45));	
+			repository.save(new Book("La Peste", "Albert Camus", 1956, "12311-2", 15.34));
+			repository.save(new Book("Fahrenheit 451", "Ray Bradbury", 1932, "83891-1", 12.45));	
 			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
