@@ -1,5 +1,6 @@
 package com.example.Bookstore.web;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.*;
@@ -19,31 +20,49 @@ public class BookController {
 	private BookRepository bookrepository;
 	@Autowired
 	private CategoryRepository catrepository;
-
 	
+	//RESTful service to get all books
+	@RequestMapping(value="/books", method = RequestMethod.GET)
+    public @ResponseBody List<Book> bookListRest() {	
+        return (List<Book>) bookrepository.findAll();
+    }
+	
+	// RESTful service to get student by id
+    @RequestMapping(value="/book/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Book> findStudentRest(@PathVariable("id") Long bookId) {	
+    	return bookrepository.findById(bookId);
+    }
+
+	//Show list of all books
     @RequestMapping(value="/booklist")
     public String bookList(Model model) {	
         model.addAttribute("books", bookrepository.findAll());
         return "booklist";
     }
     
+    //Add a new book
     @RequestMapping(value = "/add")
     public String addBook(Model model){
     	model.addAttribute("book", new Book());
     	model.addAttribute("categories", catrepository.findAll());
         return "addbook";
-    }  
+    }
+    
+    //Save a new book
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(Book book){
     	bookrepository.save(book);
         return "redirect:booklist";
-    }  
+    }
+    
+    //Delete a book
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
     	bookrepository.deleteById(bookId);
         return "redirect:../booklist";
     }
     
+    //Modify a book
     @RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
     public String modifyBook(@PathVariable("id") Long bookId, Model model) {
     	Optional<Book> book = bookrepository.findById(bookId);

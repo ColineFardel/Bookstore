@@ -2,6 +2,8 @@ package com.example.Bookstore.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Book {
 
@@ -15,6 +17,7 @@ public class Book {
 	private double price;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="categoryid")
 	private Category category;
 	
@@ -92,8 +95,11 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn
-				+ ", price=" + price + "]";
+		if(this.category!=null) {
+			return "Book [id= " + id + ", title= " + title + ", author= " + author + ", year= " + year + ", isbn= " + isbn + ", price= " + price + "category= "+ category +"]";
+		}
+		else
+			return "Book [id= " + id + ", title= " + title + ", author= " + author + ", year= " + year + ", isbn= " + isbn + ", price= " + price + "]";
 	}
 	
 }
