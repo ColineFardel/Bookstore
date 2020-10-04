@@ -1,4 +1,4 @@
-package com.example.Bookstore.web;
+ package com.example.Bookstore.web;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +62,7 @@ public class BookController {
     }
     
     //Delete a book
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
     	bookrepository.deleteById(bookId);
